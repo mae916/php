@@ -28,6 +28,18 @@
 	EOD;
 	
 	
+	참조변수
+	&$a -> $a변수의 주소값
+	
+	동적변수 
+	$school = "연희직업전문학교";
+	$a = 'school';
+	echo $$a; // $$a == $school 
+
+	define("상수명", 값);
+		- 대문자, 단어 사이 _ 입력
+		
+	
 2.1 연산자
   산술연산자(+,-,*,/ %)
   
@@ -71,6 +83,10 @@
 	$_POST - POST 방식으로 요청을 보낸 데이터
 	
 	$_FILES - 업로드한 파일의 정보(+ 임시 경로에 저장된 파일 경로)
+		tmp_name -> 업로드한 파일 데이터가 임시로 저장되어 있는 경로 
+		-> 실제 서버로 파일을 옮기면 업로드 
+		move_uploaded_file
+				
 	$_COOKIE - 쿠키에 담은 데이터 
 	$_SESSION - 세션에 담은 데이터 
 	
@@ -81,10 +97,162 @@
 	print_r(배열)-> 배열 안에 있는 데이터 
 
 5. 배열 
+	Map -> 키, 값 
+	$변수명 = [];
+	$변수명 = array();
+	
+	$변수명 = [
+		'키' => '값',
+		'키' => '값',
+		'키' => '값',
+	];
+	- 빈 대괄호[] = 대입 -> 인덱스 마지막 숫자 키 값으로 추가 
+	- 없는 키값에 대입하면 추가 
+	- 있는 키값에 대입하면 수정 
+	- array_push -> 배열 끝에 추가 
+					
+	- unset  - 변수/배열 키값의 값을 비울때
+	
+	- 배열의 요소의 갯수 체크 하는 함수 - count() / sizeof()
+	
+	- 
+	foreach ($배열 변수 as $key => $value ) {
+	
+	}
+	
+	foreach ($배열 변수 as $value ) {
+	
+	}
+	
 6. 함수
+	1)
+		function 함수명 (매개변수) {
+			
+			return "반환값";
+		}
+
+	2) 익명함수
+		함수 이름이 없는 함수
+		-> 함수를 가장한 클로져 객체 
+		   (Closure 인스턴스 - __invoke()가 호출되면서 실행)
+		
+		1) 함수를 매개변수로 사용할때 
+			function outerFunc($fruits, $callback) {
+				foreach ($fruits as $index => $fruit) {
+					$callback($fruit, $index);
+				}
+			}
+
+
+			$fruits = ["apple", "orange", "mango", "banana"];
+			outerFunc($fruits, function($fruit, $index) {
+				printf("%d = %s <br>", $index, $fruit);
+			});
+			
+		2) 반환값으로 함수(익명함수, 클로져 인스턴스)를 사용할때 
+			function outerFunc($num1) {
+	
+				return function ($num2) use ($num1) {
+						return $num1 + $num2;
+				};
+			}
+
+			$outer = outerFunc(10);
+			echo $outer(30);
+			
+	3) 가변인수 
 7. 객체
-8. 데이터베이스
+	1) class 구문 기반 
+		
+		접근제어자 $변수명;  // 멤버 변수 
+		
+		
+		접근제어자 function 메서드명 (........) {
+			
+		}
+	
+		$this->속성명
+		$this->메서드명
+		
+		속성 접근 연산자  -> 
+		
+		생성자 메서드 __construct() 생성자 함수 
+		   1. 인스턴스 생성 
+		   2. 인스턴스 변수의 초기화
+		   3. 반환값 X(return X)
+		
+		
+		접근제어자
+			public -> 클래스 내부, 외부에서 접근이 가능 
+			protected -> private과 동일 -> 상속을 통해서 상속받은 클래스 내부에서 접근 가능 
+			private -> 클래스 내부에서만 접근 가능 
+		
+		$this 현재 인스턴스의 주소(+부모클래스의 인스턴스 주소)
+		parent  부모클래스 인스턴의 주소
+		parent::메서드명
+		
+		
+	2) 정적 변수, 정적 메서드
+		클래스명::변수명 
+		클래스명::메서드명
+		
+		클래스 내부에서 정적 변수, 정적 메서드를 접근할때 
+		self::$변수명
+		self::메서드명()
+		
+		싱글톤 패턴 
+	
+	3) 상속 
+		extends 
+		
+		상위 클래스의 메서드 parent::메서드명() (메서드가 상위클래스에서만 있는 경우 $this->메서드());
+		상위클래스의 인스턴스 변수 -> $this->변수명
+		
+	4) 추상 클래스 
+	5) 인터페이스
+		implements 
+		
+8. 	데이터베이스
+	PDO(PHP Data Object)
+	PDO::__construct($dsn - 데이터베이스 엔진 접속 정보, $username, $password)  throws PDOException 
+		PDO::exec - (executeUpdate) - DELETE, UPDATE, INSERT ... 
+		     - 반영된 투플의 갯수
+		PDO::query - (executeQuery) - SELECT	
+			- PDOStatement 인스턴스 반환 -> 데이터 조회 
+					- fetch   -> 조회된 투플을 다음 투플로 이동하면서 가져온다
+	
+							PDO::FETCH_ASSOC -> 연관배열(테이블속성 => 값)
+							PDO::FETCH_NUM -> 인덱스 배열(인덱스 => 값)
+							PDO::FETCH_BOTH -> 연관배열 + 인덱스 배열(기본값)
+				
+	
+		PDO::prepare - PrepareStatement
+				-> SQL 구문을 준비 + 바인딩할 변수
+				-> PDOStatement 인스턴스 반환
+						-> 값을 바인딩 
+						
+				-> SQL 실행(PDO::execute());
+				
+		
+		
+		
 9.쿠키
 10. 세션
+
+
+
+11. 파일 추가 
+include "파일 경로"; // 파일이 없는 경우 경고 발생(스크립트 실행 유지)
+require "파일 경로"; // 파일이 없는 경우 에러 발생(스크립트 중단)
+
+같은 파일을 여러번 추가 하더라도 단 한번만 추가 
+include_once "파일 경로"; 
+require_once "파일 경로";
+
+
+
+__DIR__ -> 현재 실행중인 파일의 디렉토리 절대 경로
+__FILE__ -> 현재 실행중인 파일의 절대 경로
+
 
 
