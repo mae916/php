@@ -1,7 +1,7 @@
 <?php
 try {
-	$dsn = "mysql:host=localhost;dbname=kanban";
-	$username ="root";
+	$dsn = "mysql:host=localhost;dbname=php_exam";
+	$username ="php_exam";
 	$password = "aA!12345";
 	$db = new PDO($dsn, $username, $password);
 	

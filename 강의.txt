@@ -112,6 +112,7 @@
 	- array_push -> 배열 끝에 추가 
 					
 	- unset  - 변수/배열 키값의 값을 비울때
+	- isset -> 변수/벼열 키값이 값(비어있는 값을 포함)을 지정했는지 여부
 	
 	- 배열의 요소의 갯수 체크 하는 함수 - count() / sizeof()
 	
@@ -124,6 +125,9 @@
 	
 	}
 	
+	
+	배열 -> 문자열로 결합 -> implode("결합자", 배열); -> 문자열
+	문자열 -> 배열로 변환 -> explode("결합자", 문자열); -> 결합자로 분해된 배열
 6. 함수
 	1)
 		function 함수명 (매개변수) {
@@ -255,4 +259,52 @@ __DIR__ -> 현재 실행중인 파일의 디렉토리 절대 경로
 __FILE__ -> 현재 실행중인 파일의 절대 경로
 
 
+12. 파일
+13. 내장 함수(String, Array ...)
+14. 컴포져
+
+15. 기타
+PHP 배열 -> JSON -> json_encode(배열)
+JSON -> PHP 배열 -> json_decode(JSON 문자열)
+
+출력 헤더 - header("헤더 문구");
+
+
+method - GET -> $_GET 
+		   - POST -> $_POST 
+		   - GET, POST, COOKIE -> $_REQUEST
+		   
+BCrypt 암호화 해시 
+해시 생성 - password_hash 함수 
+해시 비교 - password_verify 함수 
+
+
+정규표현식 함수 
+preg_..... 정규표현식 지원 
+
+preg_replace - 정규표현식으로 치환
+preg_match -> 정규표현식 일치 여부
+
+문자열의 길이 - strlen(문자열)
+
+
+
+중복이 안되는 유일한 값 - uniqid();  // 내부적으로는 1/1000 단위 timestamp를 활용해서 
+md5 
+	1. md5(문자열)
+	2. hash('md5', 문자열');
+	
+time() -> 현재시간의 1초단위의 timestamp 
+date("포맷", timestamp);
+Y-m-d H:i:s
+
+자바
+yyyy-MM-dd HH:mm:ss
+
+문자열로 되어 있는 시간 -> timestamp(초단위 정수)
+strtotime("문자열 시간");
+
+
+줄개행 문자(\r\n -> <br>)
+nl2br()
 
